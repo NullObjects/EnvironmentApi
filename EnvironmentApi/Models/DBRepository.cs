@@ -7,7 +7,7 @@ namespace EnvironmentApi.Models
     /// 数据操作泛型接口
     /// </summary>
     /// <typeparam name="T">model类</typeparam>
-    public interface IDBRepository<T>
+    public interface IDbRepository<T>
         where T : class
     {
         /// <summary>
@@ -61,7 +61,7 @@ namespace EnvironmentApi.Models
     /// 数据操作泛型类
     /// </summary>
     /// <typeparam name="T">model类</typeparam>
-    public abstract class DBRepository<T>
+    public abstract class DbRepository<T>
         where T : class
     {
         /// <summary>
@@ -92,12 +92,10 @@ namespace EnvironmentApi.Models
         public T Delete(params object[] keyValue)
         {
             var data = _dbSet.Find(keyValue);
-            if (data != null)
-            {
-                _dbSet.Remove(data);
-                if (AutoCommit)
-                    _context.SaveChanges();
-            }
+            if (data == null) return null;
+            _dbSet.Remove(data);
+            if (AutoCommit)
+                _context.SaveChanges();
 
             return data;
         }

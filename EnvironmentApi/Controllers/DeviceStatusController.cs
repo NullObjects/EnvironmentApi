@@ -12,11 +12,11 @@ namespace EnvironmentApi.Controllers
     [ApiController]
     public class DeviceStatusController : ControllerBase
     {
-        private readonly IDeviceStatus deviceStatus;
+        private readonly IDeviceStatus _deviceStatus;
 
         public DeviceStatusController(IDeviceStatus deviceStatus)
         {
-            this.deviceStatus = deviceStatus;
+            this._deviceStatus = deviceStatus;
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace EnvironmentApi.Controllers
         [HttpGet]
         public ObjectResult Get()
         {
-            return new ObjectResult(deviceStatus.Select());
+            return new ObjectResult(_deviceStatus.Select());
         }
 
         /// <summary>
@@ -37,8 +37,8 @@ namespace EnvironmentApi.Controllers
         [HttpGet("{span}")]
         public ObjectResult Get(string span)
         {
-            DateTime start = DateTime.Now;
-            DateTime end = DateTime.Now;
+            var start = DateTime.Now;
+            var end = DateTime.Now;
             switch (span)
             {
                 case "hour":
@@ -54,12 +54,12 @@ namespace EnvironmentApi.Controllers
                     start = start.AddYears(-1);
                     break;
                 case "latest":
-                    return new ObjectResult(deviceStatus.Select().OrderByDescending(x => x.RecordTime).First());
+                    return new ObjectResult(_deviceStatus.Select().OrderByDescending(x => x.RecordTime).First());
                 default:
-                    return new ObjectResult(deviceStatus.Select());
+                    return new ObjectResult(_deviceStatus.Select());
             }
 
-            return new ObjectResult(deviceStatus.Select()
+            return new ObjectResult(_deviceStatus.Select()
                 .Where(x => x.RecordTime >= Convert.ToDateTime(start) && x.RecordTime <= Convert.ToDateTime(end)));
         }
 
@@ -74,12 +74,12 @@ namespace EnvironmentApi.Controllers
         {
             try
             {
-                return new ObjectResult(deviceStatus.Select()
+                return new ObjectResult(_deviceStatus.Select()
                     .Where(x => x.RecordTime >= Convert.ToDateTime(start) && x.RecordTime <= Convert.ToDateTime(end)));
             }
             catch
             {
-                return new ObjectResult(deviceStatus.Select());
+                return new ObjectResult(_deviceStatus.Select());
             }
         }
     }
