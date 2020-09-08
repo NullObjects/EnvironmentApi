@@ -20,16 +20,6 @@ namespace EnvironmentApi.Controllers
         }
 
         /// <summary>
-        /// 获取所有数据
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public ObjectResult Get()
-        {
-            return new ObjectResult(_environment.Select());
-        }
-
-        /// <summary>
         /// 获取最近时间数据
         /// </summary>
         /// <param name="span"></param>
@@ -47,20 +37,15 @@ namespace EnvironmentApi.Controllers
                 case "day":
                     start = start.AddDays(-1);
                     break;
-                case "month":
-                    start = start.AddMonths(-1);
+                case "week":
+                    start = start.AddDays(-7);
                     break;
-                case "year":
-                    start = start.AddYears(-1);
-                    break;
-                case "latest":
-                    return new ObjectResult(_environment.Select().OrderByDescending(x => x.RecordTime).First());
                 default:
-                    return new ObjectResult(_environment.Select());
+                    return new ObjectResult(_environment.Select().OrderByDescending(x => x.RecordTime).First());
             }
 
             return new ObjectResult(_environment.Select()
-                .Where(x => x.RecordTime >= Convert.ToDateTime(start) && x.RecordTime <= Convert.ToDateTime(end)));
+                .Where(x => x.RecordTime >= start && x.RecordTime <= end));
         }
 
         /// <summary>
@@ -74,12 +59,17 @@ namespace EnvironmentApi.Controllers
         {
             try
             {
-                return new ObjectResult(_environment.Select()
-                    .Where(x => x.RecordTime >= Convert.ToDateTime(start) && x.RecordTime <= Convert.ToDateTime(end)));
+                var startTime = Convert.ToDateTime(start);
+                var endTime = Convert.ToDateTime(end);
+                if ((endTime - startTime).Days <= 7)
+                    return new ObjectResult(_environment.Select()
+                        .Where(x => x.RecordTime >= startTime && x.RecordTime <= endTime));
+                else
+                    return new ObjectResult(_environment.Select().OrderByDescending(x => x.RecordTime).First());
             }
             catch
             {
-                return new ObjectResult(_environment.Select());
+                return new ObjectResult(_environment.Select().OrderByDescending(x => x.RecordTime).First());
             }
         }
     }
