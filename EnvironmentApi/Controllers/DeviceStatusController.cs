@@ -63,7 +63,7 @@ namespace EnvironmentApi.Controllers
                 var endTime = Convert.ToDateTime(end);
                 if ((endTime - startTime).Days <= 7)
                     return new ObjectResult(_deviceStatus.Select()
-                        .Where(x => x.RecordTime >= startTime && x.RecordTime <= startTime));
+                        .Where(x => x.RecordTime >= startTime && x.RecordTime <= endTime));
                 else
                     return new ObjectResult(_deviceStatus.Select().OrderByDescending(x => x.RecordTime).First());
             }

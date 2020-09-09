@@ -20,7 +20,7 @@
     "EnvironmentApi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "DeviceStatus/Get",
+      "launchUrl": "DeviceStatus/Get/latest",
       "applicationUrl": "https://127.0.0.1:5001;http://127.0.0.1:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
