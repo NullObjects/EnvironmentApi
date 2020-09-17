@@ -1,7 +1,39 @@
 ﻿# Environment
-RPi Environment System
-## 树莓派环境监测系统
-- 树莓派使用Adafruit库，传感器为DHT11
-- 数据库使用MySQL8
-- 后端ASP.NET Core Web Api
-- 前端Vuetify + ECharts
+
+### 框架
+- ASP .Net Core Web Api
+- Microsoft.EntityFrameworkCore.Tools
+- MySql.Data.EntityFrameworkCore
+
+### 使用前添加配置
+- appsettings.json
+```
+  "ConnectionStrings": {
+    "EnvironmentConnection": "Server=; Database=; uid=; password=;"
+  },
+```
+
+### 接口
+- 已配置https，可直接访问https://<ip地址>/<数据>/Get/<参数>
+#### <数据>
+```
+Environment : 环境信息
+DeviceStatus : 设备状态
+```
+#### <参数>
+- 时间段
+```
+以下时间均自当前时间推算
+hour : 一小时内
+day : 一天内
+week : 一周内
+other : 最新一条数据
+```
+![timespan](https://github.com/NullObjects/EnvironmentApi/blob/master/images/timespan.png)
+- 自定义时间
+```
+yyyy-mm-ddThh:MM:ss&&yyyy-mm-ddThh:MM:ss : 开始时间&&结束时间
+具体时间可省略，即yyyy-mm-dd&&yyyy-mm-dd
+不得大于7天，否则数据量过大
+```
+![time](https://github.com/NullObjects/EnvironmentApi/blob/master/images/time.png)
