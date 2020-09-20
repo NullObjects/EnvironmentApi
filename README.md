@@ -12,6 +12,12 @@
     "EnvironmentConnection": "Server=; Database=; uid=; password=;"
   },
 ```
+###
+- 快捷启动
+```
+.zshrc添加
+alias env_asp="cd ~/source/ASP/EnvironmentApi && sudo dotnet EnvironmentApi.dll"
+```
 
 ### 接口
 - 已配置https，可直接访问https://<ip地址>/<数据>/Get/<参数>
