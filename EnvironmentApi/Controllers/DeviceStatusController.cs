@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using EnvironmentApi.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EnvironmentApi.Controllers
 {
-    [Authorize]
     [Route("[controller]/[action]")]
     [ApiController]
     public class DeviceStatusController : ControllerBase

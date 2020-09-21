@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace EnvironmentApi.Models
+﻿namespace EnvironmentApi.Models
 {
     /// <summary>
     /// 环境信息接口
@@ -17,10 +12,10 @@ namespace EnvironmentApi.Models
     /// </summary>
     public class EnvironmentRepository : DbRepository<EnvironmentModel>, IEnvironment
     {
-        public EnvironmentRepository(EnvironmentContext context)
+        public EnvironmentRepository(EnvironmentContext dbContext)
         {
-            _context = context;
-            _dbSet = context.Environment;
+            DbContext = dbContext;
+            DbSet = dbContext.Environment;
         }
     }
 }

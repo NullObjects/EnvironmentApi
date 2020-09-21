@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace EnvironmentApi.Models
+﻿namespace EnvironmentApi.Models
 {
     /// <summary>
     /// 设备信息接口
@@ -17,10 +12,10 @@ namespace EnvironmentApi.Models
     /// </summary>
     public class DeviceStatusRepository : DbRepository<DeviceStatusModel>, IDeviceStatus
     {
-        public DeviceStatusRepository(EnvironmentContext context)
+        public DeviceStatusRepository(EnvironmentContext dbContext)
         {
-            _context = context;
-            _dbSet = context.DeviceStatus;
+            DbContext = dbContext;
+            DbSet = dbContext.DeviceStatus;
         }
     }
 }

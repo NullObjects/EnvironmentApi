@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace EnvironmentApi.Models
 {
@@ -67,55 +67,55 @@ namespace EnvironmentApi.Models
         /// <summary>
         /// 数据上下文
         /// </summary>
-        protected DbContext _context { get; set; }
+        protected DbContext DbContext { get; set; }
 
         /// <summary>
         /// 数据集
         /// </summary>
-        protected DbSet<T> _dbSet { get; set; }
+        protected DbSet<T> DbSet { get; set; }
 
         public bool AutoCommit { get; set; } = true;
 
         public int Commit()
         {
-            return _context.SaveChanges();
+            return DbContext.SaveChanges();
         }
 
         public T Add(T model)
         {
-            _dbSet.Add(model);
+            DbSet.Add(model);
             if (AutoCommit)
-                _context.SaveChanges();
+                DbContext.SaveChanges();
             return model;
         }
 
         public T Delete(params object[] keyValue)
         {
-            var data = _dbSet.Find(keyValue);
+            var data = DbSet.Find(keyValue);
             if (data == null) return null;
-            _dbSet.Remove(data);
+            DbSet.Remove(data);
             if (AutoCommit)
-                _context.SaveChanges();
+                DbContext.SaveChanges();
 
             return data;
         }
 
         public T Select(params object[] keyValue)
         {
-            return _dbSet.Find(keyValue);
+            return DbSet.Find(keyValue);
         }
 
         public IEnumerable<T> Select()
         {
-            return _dbSet;
+            return DbSet;
         }
 
         public T Update(T model)
         {
-            var data = _dbSet.Attach(model);
+            var data = DbSet.Attach(model);
             data.State = EntityState.Modified;
             if (AutoCommit)
-                _context.SaveChanges();
+                DbContext.SaveChanges();
             return model;
         }
     }
