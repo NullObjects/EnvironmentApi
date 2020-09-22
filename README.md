@@ -54,10 +54,11 @@ yyyy-mm-ddThh:MM:ss&&yyyy-mm-ddThh:MM:ss : 开始时间&&结束时间
 
 ### 用户管理接口
 - 以下role中public为公共角色(必要)，admin为管理员角色
-- 管理其他用户信息需要管理员身份登录(header["Authorization"]拥有role为admin的jwt)
+- 管理其他用户信息除public外，还需要admin角色(header["Authorization"]拥有role为public和admin的jwt)
 #### 注册
 - URL : https://<ip地址>/Authentication/Register
 - method : post
+- 注册管理员需要role为admin的jwt
 ```
 body
 {
@@ -80,6 +81,7 @@ body
 #### 修改用户信息
 - URL : https://<ip地址>/Authentication/Modify
 - method : post
+- 需要role为public的jwt
 ```
 body
 {
@@ -92,6 +94,8 @@ body
 #### 获取用户信息
 - URL : https://<ip地址>/Authentication/Information
 - method : get
+- 需要role为public的jwt
 #### 删除用户信息
 - URL : https://<ip地址>/Authentication/Delete/<用户名>
 - method : get
+- 需要role为public的jwt
