@@ -1,0 +1,395 @@
+{
+	"version": 1,
+	"collections": [
+		{
+			"id": "9846fd68-94a1-4c5d-a7c8-b67c5381f2b0",
+			"name": "EnvironmentApi",
+			"description": "",
+			"auth": null,
+			"events": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9a8c7b5d-b57e-48ca-b683-77ca4f282c3c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "57e1c19c-efc1-4d93-a131-ee148c63ca2d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"variables": [],
+			"order": [
+				"e17368d2-610a-4836-ad0a-240b40c5d8b0",
+				"e0516f4c-2b13-4b56-97f1-4e215c2405d6",
+				"50b18129-8f8a-4b03-9922-437011303240",
+				"0143db85-5829-4a84-b40c-796491432e40",
+				"063e314b-e35a-466d-b155-8ebc8826ad68",
+				"e5840d1a-ff5c-4d7a-aadb-4c599b9215ec",
+				"05a6f89d-6063-44e5-938e-8114ac674be9"
+			],
+			"folders_order": [],
+			"protocolProfileBehavior": {},
+			"folders": [],
+			"requests": [
+				{
+					"id": "0143db85-5829-4a84-b40c-796491432e40",
+					"name": "UserRegist",
+					"url": "https://127.0.0.1/Authentication/Register",
+					"description": "",
+					"data": [],
+					"dataOptions": {
+						"raw": {
+							"language": "json"
+						}
+					},
+					"dataMode": "raw",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "09685a55-8e74-42a0-b338-f67534dd3f84",
+								"exec": [
+									"var val = \"\"\r",
+									"pm.environment.set(\"token\", val)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": null,
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"preRequestScript": "var val = \"\"\r\npm.environment.set(\"token\", val)",
+					"tests": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "9846fd68-94a1-4c5d-a7c8-b67c5381f2b0",
+					"rawModeData": "{\r\n    \"username\":\"demo\",\r\n    \"email\":\"abc@abc.com\",\r\n    \"password\":\"test\",\r\n    \"role\":\"public::test\"\r\n}",
+					"pathVariables": {}
+				},
+				{
+					"id": "05a6f89d-6063-44e5-938e-8114ac674be9",
+					"name": "UserModify",
+					"url": "https://127.0.0.1/Authentication/Modify",
+					"description": "",
+					"data": [],
+					"dataOptions": {
+						"raw": {
+							"language": "json"
+						}
+					},
+					"dataMode": "raw",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "026d2793-b82c-43c9-a0fd-f8c7036287e5",
+								"exec": [
+									"var val = \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsicHVibGljIiwiYWRtaW4iXSwiZXhwIjoxNjAwNzYzNzQ2LCJpc3MiOiJlbnZpcm9ubWVudC5jbiIsImF1ZCI6IkVudmlyb25tZW50QXBpIn0.ObcipSAlhQo3LTFUOyBcZIPVh72dfXvai_k1-w2sjT0\"\r",
+									"pm.environment.set(\"token\", val)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": null,
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"preRequestScript": "var val = \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsicHVibGljIiwiYWRtaW4iXSwiZXhwIjoxNjAwNzYzNzQ2LCJpc3MiOiJlbnZpcm9ubWVudC5jbiIsImF1ZCI6IkVudmlyb25tZW50QXBpIn0.ObcipSAlhQo3LTFUOyBcZIPVh72dfXvai_k1-w2sjT0\"\r\npm.environment.set(\"token\", val)",
+					"tests": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "9846fd68-94a1-4c5d-a7c8-b67c5381f2b0",
+					"rawModeData": "{\r\n    \"username\":\"test\",\r\n    \"email\":\"test@test\",\r\n    \"password\":\"test\",\r\n    \"role\":\"public::test\"\r\n}",
+					"pathVariables": {}
+				},
+				{
+					"id": "063e314b-e35a-466d-b155-8ebc8826ad68",
+					"name": "UserInformation",
+					"url": "https://127.0.0.1/Authentication/Information",
+					"description": "",
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5fb4d342-e84f-457e-b59c-951ede866914",
+								"exec": [
+									"var val = \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsicHVibGljIiwiYWRtaW4iXSwiZXhwIjoxNjAwNzYzNzQ2LCJpc3MiOiJlbnZpcm9ubWVudC5jbiIsImF1ZCI6IkVudmlyb25tZW50QXBpIn0.ObcipSAlhQo3LTFUOyBcZIPVh72dfXvai_k1-w2sjT0\"\r",
+									"pm.environment.set(\"token\", val)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": null,
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"preRequestScript": "var val = \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsicHVibGljIiwiYWRtaW4iXSwiZXhwIjoxNjAwNzYzNzQ2LCJpc3MiOiJlbnZpcm9ubWVudC5jbiIsImF1ZCI6IkVudmlyb25tZW50QXBpIn0.ObcipSAlhQo3LTFUOyBcZIPVh72dfXvai_k1-w2sjT0\"\r\npm.environment.set(\"token\", val)",
+					"tests": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "9846fd68-94a1-4c5d-a7c8-b67c5381f2b0",
+					"pathVariables": {}
+				},
+				{
+					"id": "50b18129-8f8a-4b03-9922-437011303240",
+					"name": "UserLogin",
+					"url": "https://127.0.0.1/Authentication/Login",
+					"description": "",
+					"data": [],
+					"dataOptions": {
+						"raw": {
+							"language": "json"
+						}
+					},
+					"dataMode": "raw",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "9846fd68-94a1-4c5d-a7c8-b67c5381f2b0",
+					"rawModeData": "{\r\n    \"username\":\"demo\",\r\n    \"password\":\"demo\"\r\n}",
+					"pathVariables": {}
+				},
+				{
+					"id": "e0516f4c-2b13-4b56-97f1-4e215c2405d6",
+					"name": "DeviceStatus",
+					"url": "https://127.0.0.1/DeviceStatus/Get/latest",
+					"description": "",
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "eefe91e2-2db8-4d77-b0bf-0297f4b7cc7b",
+								"exec": [
+									"var val = \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFiY0BhYmMuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbInB1YmxpYyIsInRlc3QiXSwiZXhwIjoxNjAwNzQ2NjkwLCJpc3MiOiJlbnZpcm9ubWVudC5jbiIsImF1ZCI6IkVudmlyb25tZW50QXBpIn0.J1TJt-WM-xNmbVSvWWGchyQkuXC1O7197eXDPHIUCLg\"\r",
+									"pm.environment.set(\"token\", val)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "932390f6-3ebe-43d8-86b3-57b08b56f2e7",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": null,
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"preRequestScript": "var val = \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFiY0BhYmMuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbInB1YmxpYyIsInRlc3QiXSwiZXhwIjoxNjAwNzQ2NjkwLCJpc3MiOiJlbnZpcm9ubWVudC5jbiIsImF1ZCI6IkVudmlyb25tZW50QXBpIn0.J1TJt-WM-xNmbVSvWWGchyQkuXC1O7197eXDPHIUCLg\"\r\npm.environment.set(\"token\", val)",
+					"tests": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "9846fd68-94a1-4c5d-a7c8-b67c5381f2b0",
+					"pathVariables": {}
+				},
+				{
+					"id": "e17368d2-610a-4836-ad0a-240b40c5d8b0",
+					"name": "Environment",
+					"url": "https://127.0.0.1/Environment/Get/latest",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "raw",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "cca212a1-b314-4740-adc0-30e48d44ec0c",
+								"exec": [
+									"var val = \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFiY0BhYmMuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbInB1YmxpYyIsInRlc3QiXSwiZXhwIjoxNjAwNzQ2NjkwLCJpc3MiOiJlbnZpcm9ubWVudC5jbiIsImF1ZCI6IkVudmlyb25tZW50QXBpIn0.J1TJt-WM-xNmbVSvWWGchyQkuXC1O7197eXDPHIUCLg\"\r",
+									"pm.environment.set(\"token\", val)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"strictSSL": false
+					},
+					"preRequestScript": "var val = \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVzdCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImFiY0BhYmMuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbInB1YmxpYyIsInRlc3QiXSwiZXhwIjoxNjAwNzQ2NjkwLCJpc3MiOiJlbnZpcm9ubWVudC5jbiIsImF1ZCI6IkVudmlyb25tZW50QXBpIn0.J1TJt-WM-xNmbVSvWWGchyQkuXC1O7197eXDPHIUCLg\"\r\npm.environment.set(\"token\", val)",
+					"tests": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "9846fd68-94a1-4c5d-a7c8-b67c5381f2b0",
+					"rawModeData": "",
+					"pathVariables": {}
+				},
+				{
+					"id": "e5840d1a-ff5c-4d7a-aadb-4c599b9215ec",
+					"name": "UserDelete",
+					"url": "https://127.0.0.1/Authentication/Delete/demo",
+					"description": "",
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}"
+							}
+						]
+					},
+					"events": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "aa95faec-c624-4610-bdea-4158669af5ec",
+								"exec": [
+									"var val = \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsicHVibGljIiwiYWRtaW4iXSwiZXhwIjoxNjAwNzYzODQwLCJpc3MiOiJlbnZpcm9ubWVudC5jbiIsImF1ZCI6IkVudmlyb25tZW50QXBpIn0.MjJfHtj4qW-mdQ40Aqaw86gO5nEB_XbdurgQ1nSOFZo\"\r",
+									"pm.environment.set(\"token\", val)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"folder": null,
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"preRequestScript": "var val = \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsicHVibGljIiwiYWRtaW4iXSwiZXhwIjoxNjAwNzYzODQwLCJpc3MiOiJlbnZpcm9ubWVudC5jbiIsImF1ZCI6IkVudmlyb25tZW50QXBpIn0.MjJfHtj4qW-mdQ40Aqaw86gO5nEB_XbdurgQ1nSOFZo\"\r\npm.environment.set(\"token\", val)",
+					"tests": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{token}}"
+					},
+					"collectionId": "9846fd68-94a1-4c5d-a7c8-b67c5381f2b0",
+					"pathVariables": {}
+				}
+			]
+		}
+	],
+	"environments": [
+		{
+			"id": "909a1a48-bb60-4fce-90a6-e630a5dd5832",
+			"name": "My Workspace - globals",
+			"values": []
+		}
+	],
+	"headerPresets": [],
+	"globals": []
+}

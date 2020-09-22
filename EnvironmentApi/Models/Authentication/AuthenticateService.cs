@@ -19,15 +19,48 @@ namespace EnvironmentApi.Models
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        bool IsRegisted(RegistRequestDto request);
+        UserModel AddUserData(RegistRequestDto request);
 
         /// <summary>
-        /// 身份认证
+        /// 获取用户信息
+        /// </summary>
+        /// <returns></returns>
+        UserModel GetUserData(string username);
+
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<UserModel> GetUserData();
+
+        /// <summary>
+        /// 修改用户信息
+        /// </summary>
+        /// <param name="requestDto"></param>
+        /// <returns></returns>
+        UserModel ModifyUserData(RegistRequestDto requestDto);
+
+        /// <summary>
+        /// 删除用户信息
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        UserModel DeleteUserData(string username);
+
+        /// <summary>
+        /// 用户登录
         /// </summary>
         /// <param name="request">认证请求</param>
-        /// <param name="token">生成token</param>
         /// <returns>认证结果</returns>
-        bool IsAuthenticated(LoginRequestDto request, out string token);
+        string Authenticated(LoginRequestDto request);
+
+        /// <summary>
+        /// 解析claims获取用户及角色
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="roles"></param>
+        /// <returns></returns>
+        string ParsingClaims(IEnumerable<Claim> request, out List<string> roles);
     }
 
     /// <summary>
@@ -44,37 +77,67 @@ namespace EnvironmentApi.Models
             _tokenManagement = tokenManagement.Value;
         }
 
-        public bool IsRegisted(RegistRequestDto request)
+        public UserModel AddUserData(RegistRequestDto request)
         {
             //用户已存在
             if (_user.Select(request.UserName) != null)
-                return false;
+                return null;
             //用户不存在
-            _user.Add(new UserModel
+            var newUser = new UserModel
             {
                 UserName = request.UserName,
                 Email = request.Email,
                 Password = request.Password,
-                Role = request.Role
-            });
-            return true;
+                Role = request.Role.ToLower()
+            };
+            _user.Add(newUser);
+            return newUser;
         }
 
-        public bool IsAuthenticated(LoginRequestDto request, out string token)
+        public UserModel GetUserData(string username)
         {
-            token = string.Empty;
+            return _user.Select(username);
+        }
+
+        public IEnumerable<UserModel> GetUserData()
+        {
+            return _user.Select();
+        }
+
+        public UserModel ModifyUserData(RegistRequestDto requestDto)
+        {
+            var user = _user.Select(requestDto.UserName);
+            if (user is null)
+                return null;
+            user.Email = requestDto.Email;
+            user.Password = requestDto.Password;
+            user.Role = requestDto.Role;
+            _user.Update(user);
+            return user;
+        }
+
+        public UserModel DeleteUserData(string username)
+        {
+            var user = _user.Select(username);
+            if (user is null)
+                return null;
+            _user.Delete(username);
+            return user;
+        }
+
+        public string Authenticated(LoginRequestDto request)
+        {
             //获取用户
             var user = _user.Select(request.Username);
             if (user is null || user.Password != request.Password)
-                return false;
+                return null;
             //获取用户角色
             var roles = user.Role.Split("::", StringSplitOptions.RemoveEmptyEntries).ToList();
 
             //创建claim
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim(ClaimTypes.Name, user.UserName)
             };
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
             //生成token
@@ -82,8 +145,28 @@ namespace EnvironmentApi.Models
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var jwtToken = new JwtSecurityToken(_tokenManagement.Issuer, _tokenManagement.Audience, claims,
                 expires: DateTime.Now.AddMinutes(_tokenManagement.AccessExpiration), signingCredentials: credentials);
-            token = new JwtSecurityTokenHandler().WriteToken(jwtToken);
-            return true;
+            var token = new JwtSecurityTokenHandler().WriteToken(jwtToken);
+            return token;
+        }
+
+        public string ParsingClaims(IEnumerable<Claim> request, out List<string> roles)
+        {
+            var user = string.Empty;
+            roles = new List<string>();
+            foreach (var claim in request)
+            {
+                switch (claim.Type)
+                {
+                    case ClaimTypes.Name:
+                        user = claim.Value;
+                        break;
+                    case ClaimTypes.Role:
+                        roles.Add(claim.Value);
+                        break;
+                }
+            }
+
+            return user;
         }
     }
 }
