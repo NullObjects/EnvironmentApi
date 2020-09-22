@@ -11,6 +11,13 @@
   "ConnectionStrings": {
     "EnvironmentConnection": "Server=; Database=; uid=; password=;"
   },
+  "tokenManagement": {
+    "secret": "environment123456",
+    "issuer": "environment.cn",
+    "audience": "EnvironmentApi",
+    "accessExpiration": 30,
+    "refreshExpiration": 60
+  },
 ```
 ###
 - 快捷启动

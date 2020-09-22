@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EnvironmentApi.Controllers
 {
-    [Route("[controller]/[action]")]
     [ApiController]
+    [Route("[controller]/[action]")]
     public class DeviceStatusController : ControllerBase
     {
         private readonly IDeviceStatus _deviceStatus;
@@ -22,7 +22,7 @@ namespace EnvironmentApi.Controllers
         /// <param name="span"></param>
         /// <returns></returns>
         [HttpGet("{span}")]
-        public ObjectResult Get(string span)
+        public ActionResult Get(string span)
         {
             var start = DateTime.Now;
             var end = DateTime.Now;
@@ -52,7 +52,7 @@ namespace EnvironmentApi.Controllers
         /// <param name="end"></param>
         /// <returns></returns>
         [HttpGet("{start}&&{end}")]
-        public ObjectResult Get(string start, string end)
+        public ActionResult Get(string start, string end)
         {
             try
             {

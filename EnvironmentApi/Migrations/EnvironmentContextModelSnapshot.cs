@@ -4,7 +4,6 @@ using System;
 using EnvironmentApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EnvironmentApi.Migrations
 {
@@ -15,7 +14,7 @@ namespace EnvironmentApi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.7")
+                .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("EnvironmentApi.Models.DeviceStatusModel", b =>
@@ -65,6 +64,34 @@ namespace EnvironmentApi.Migrations
                 b.HasKey("ID");
 
                 b.ToTable("Environment");
+            });
+
+            modelBuilder.Entity("EnvironmentApi.Models.UserModel", b =>
+            {
+                b.Property<string>("UserName")
+                    .HasColumnType("varchar(767)");
+
+                b.Property<string>("Email")
+                    .HasColumnType("text");
+
+                b.Property<string>("Password")
+                    .HasColumnType("text");
+
+                b.Property<string>("Role")
+                    .HasColumnType("text");
+
+                b.HasKey("UserName");
+
+                b.ToTable("Users");
+
+                b.HasData(
+                    new
+                    {
+                        UserName = "admin",
+                        Email = "admin@admin.com",
+                        Password = "admin@admin",
+                        Role = "public::admin"
+                    });
             });
 #pragma warning restore 612, 618
         }
