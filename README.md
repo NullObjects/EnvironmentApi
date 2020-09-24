@@ -12,7 +12,7 @@
     "EnvironmentConnection": "Server=; Database=; uid=; password=;"
   },
   "tokenManagement": {
-    "secret": "environment123456",
+    "secret": "",
     "issuer": "environment.cn",
     "audience": "EnvironmentApi",
     "accessExpiration": 30,
@@ -55,6 +55,10 @@ yyyy-mm-ddThh:MM:ss&&yyyy-mm-ddThh:MM:ss : 开始时间&&结束时间
 ### 用户管理接口
 - 以下role中public为公共角色(必要)，admin为管理员角色
 - 管理其他用户信息除public外，还需要admin角色(header["Authorization"]拥有role为public和admin的jwt)
+#### 获取公钥
+- URL : https://<ip地址>/Authentication/GetKey
+- method : get
+- 使用公钥加密password及old_password
 #### 注册
 - URL : https://<ip地址>/Authentication/Register
 - method : post
@@ -69,6 +73,7 @@ body
 }
 ```
 #### 登录
+- 获取jwt
 - URL : https://<ip地址>/Authentication/Login
 - method : post
 ```
@@ -87,6 +92,7 @@ body
 {
     "username":"",
     "email":"",
+    "old_password":"",
     "password":"",
     "role":"public<::role1><::role2>"
 }

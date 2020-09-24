@@ -38,7 +38,7 @@ namespace EnvironmentApi.Models
         /// </summary>
         /// <param name="requestDto"></param>
         /// <returns></returns>
-        UserModel ModifyUserData(RegistRequestDto requestDto);
+        UserModel ModifyUserData(ModifyRequestDto requestDto);
 
         /// <summary>
         /// 删除用户信息
@@ -87,7 +87,7 @@ namespace EnvironmentApi.Models
             {
                 UserName = request.UserName,
                 Email = request.Email,
-                Password = request.Password,
+                Password = SecurityAes.Encrypt(SecurityRsa.Decrypt(request.Password)),
                 Role = request.Role.ToLower()
             };
             _user.Add(newUser);
@@ -104,14 +104,17 @@ namespace EnvironmentApi.Models
             return _user.Select();
         }
 
-        public UserModel ModifyUserData(RegistRequestDto requestDto)
+        public UserModel ModifyUserData(ModifyRequestDto requestDto)
         {
             var user = _user.Select(requestDto.UserName);
             if (user is null)
                 return null;
+            if (user.Password != SecurityAes.Encrypt(SecurityRsa.Decrypt(requestDto.OldPassword)) &&
+                !user.Role.Contains("admin"))
+                return null;
             user.Email = requestDto.Email;
-            user.Password = requestDto.Password;
-            user.Role = requestDto.Role;
+            user.Password = SecurityAes.Encrypt(SecurityRsa.Decrypt(requestDto.Password));
+            user.Role = requestDto.Role.ToLower();
             _user.Update(user);
             return user;
         }
@@ -129,7 +132,7 @@ namespace EnvironmentApi.Models
         {
             //获取用户
             var user = _user.Select(request.Username);
-            if (user is null || user.Password != request.Password)
+            if (user is null || user.Password != SecurityAes.Encrypt(SecurityRsa.Decrypt(request.Password)))
                 return null;
             //获取用户角色
             var roles = user.Role.Split("::", StringSplitOptions.RemoveEmptyEntries).ToList();

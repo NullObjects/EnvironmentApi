@@ -62,7 +62,7 @@ namespace EnvironmentApi.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "public")]
-        public ActionResult Modify(RegistRequestDto request)
+        public ActionResult Modify(ModifyRequestDto request)
         {
             if (!ModelState.IsValid)
                 return BadRequest("Invalid Request");
@@ -115,6 +115,16 @@ namespace EnvironmentApi.Controllers
             if (token is null)
                 return BadRequest("用户不存在或密码错误");
             return Ok(token);
+        }
+
+        /// <summary>
+        /// 获取RSA公钥
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult GetKey()
+        {
+            return Ok(SecurityRsa.PublicKeyString);
         }
     }
 }
