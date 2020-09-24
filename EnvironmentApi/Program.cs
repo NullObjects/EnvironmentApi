@@ -14,11 +14,12 @@ namespace EnvironmentApi
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.ConfigureKestrel(serverOptions =>
-                    {
-                        serverOptions.ListenAnyIP(443,
-                            listenOptions => { listenOptions.UseHttps("wwwroot//server.pfx", "Hj147258"); });
-                    }).UseStartup<Startup>();
+                    // webBuilder.ConfigureKestrel(serverOptions =>
+                    // {
+                    //     serverOptions.ListenAnyIP(443,
+                    //         listenOptions => { listenOptions.UseHttps("wwwroot//server.pfx", "Hj147258"); });
+                    // }).UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>();
                 });
     }
 }

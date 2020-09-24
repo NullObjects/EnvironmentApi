@@ -19,11 +19,7 @@ namespace EnvironmentApi.Models
 
         private static void InitWindows()
         {
-            var parameters = new CspParameters()
-            {
-                KeyContainerName = "ENVIRONMENTRSAHELPER" // 默认的RSA保存密钥的容器名称
-            };
-            var handle = new RSACryptoServiceProvider(parameters);
+            var handle = RSA.Create();
             PublicKey = handle.ExportParameters(false);
             PrivateKey = handle.ExportParameters(true);
 

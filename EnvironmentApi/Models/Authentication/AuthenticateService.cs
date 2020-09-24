@@ -82,6 +82,14 @@ namespace EnvironmentApi.Models
             //用户已存在
             if (_user.Select(request.UserName) != null)
                 return null;
+            var priKey = SecurityRsa.PrivateKeyString;
+            var pubKey = SecurityRsa.PublicKeyString;
+
+            var code = SecurityRsa.Encrypt("code");
+            var text = SecurityRsa.Decrypt(code);
+
+            var rsa = SecurityRsa.Decrypt(request.Password);
+            var aes = SecurityAes.Encrypt(rsa);
             //用户不存在
             var newUser = new UserModel
             {
