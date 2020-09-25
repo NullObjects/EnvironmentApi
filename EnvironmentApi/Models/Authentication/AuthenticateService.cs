@@ -79,17 +79,24 @@ namespace EnvironmentApi.Models
 
         public UserModel AddUserData(RegistRequestDto request)
         {
+            Console.WriteLine("\n");
+            Console.WriteLine("pubKey---" + SecurityRsa.PublicKeyString);
+            Console.WriteLine("priKey---" + SecurityRsa.PrivateKeyString);
+            Console.WriteLine("\n");
+            Console.WriteLine("sourceUSER---" + request.UserName);
+            Console.WriteLine("sourcePWD---" + request.Password);
+            Console.WriteLine("\n");
+            var debugCode = SecurityRsa.Encrypt("debug+123..");
+            Console.WriteLine("RSADebugEn---" + debugCode);
+            Console.WriteLine("RSADebugDe---" + SecurityRsa.Decrypt(debugCode));
+            Console.WriteLine("AESDebugEn---" + SecurityAes.Encrypt(debugCode));
+            Console.WriteLine("\n");
+            var code = SecurityRsa.Decrypt(request.Password);
+            Console.WriteLine("RSADecrypt---" + code);
+            Console.WriteLine("AESEncrypt---" + SecurityAes.Encrypt(code));
             //用户已存在
             if (_user.Select(request.UserName) != null)
                 return null;
-            var priKey = SecurityRsa.PrivateKeyString;
-            var pubKey = SecurityRsa.PublicKeyString;
-
-            var code = SecurityRsa.Encrypt("code");
-            var text = SecurityRsa.Decrypt(code);
-
-            var rsa = SecurityRsa.Decrypt(request.Password);
-            var aes = SecurityAes.Encrypt(rsa);
             //用户不存在
             var newUser = new UserModel
             {
