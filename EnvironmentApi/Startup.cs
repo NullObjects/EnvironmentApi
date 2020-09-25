@@ -1,4 +1,5 @@
 using System.Text;
+using EnvironmentApi.Controllers;
 using EnvironmentApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;

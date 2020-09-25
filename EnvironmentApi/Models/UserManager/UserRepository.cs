@@ -15,7 +15,7 @@
         public UserRepository(EnvironmentContext dbContext)
         {
             base.DbContext = dbContext;
-            base.DbSet = dbContext.Users;
+            base.DbSet = dbContext.User;
         }
     }
 }

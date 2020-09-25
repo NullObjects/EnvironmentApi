@@ -82,14 +82,14 @@ namespace EnvironmentApi.Migrations
 
                 b.HasKey("UserName");
 
-                b.ToTable("Users");
+                b.ToTable("User");
 
                 b.HasData(
                     new
                     {
                         UserName = "admin",
                         Email = "admin@admin.com",
-                        Password = "admin@admin",
+                        Password = "PBK+UIN0ifA9lVueYaEM8g==",
                         Role = "public::admin"
                     });
             });

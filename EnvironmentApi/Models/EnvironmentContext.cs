@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EnvironmentApi.Controllers;
+using Microsoft.EntityFrameworkCore;
 
 namespace EnvironmentApi.Models
 {
     public class EnvironmentContext : DbContext
     {
-        public DbSet<UserModel> Users { get; set; }
+        public DbSet<UserModel> User { get; set; }
         public DbSet<DeviceStatusModel> DeviceStatus { get; set; }
         public DbSet<EnvironmentModel> Environment { get; set; }
 
@@ -23,7 +24,7 @@ namespace EnvironmentApi.Models
                 {
                     UserName = "admin",
                     Email = "admin@admin.com",
-                    Password = "admin@admin",
+                    Password = SecurityAes.Encrypt("admin@admin"),
                     Role = "public::admin"
                 });
         }

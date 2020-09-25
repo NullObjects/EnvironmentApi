@@ -4,10 +4,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using EnvironmentApi.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace EnvironmentApi.Models
+namespace EnvironmentApi.Controllers
 {
     /// <summary>
     /// 认证接口
@@ -79,30 +80,16 @@ namespace EnvironmentApi.Models
 
         public UserModel AddUserData(RegistRequestDto request)
         {
-            Console.WriteLine("\n");
-            Console.WriteLine("pubKey---" + SecurityRsa.PublicKeyString);
-            Console.WriteLine("priKey---" + SecurityRsa.PrivateKeyString);
-            Console.WriteLine("\n");
-            Console.WriteLine("sourceUSER---" + request.UserName);
-            Console.WriteLine("sourcePWD---" + request.Password);
-            Console.WriteLine("\n");
-            var debugCode = SecurityRsa.Encrypt("debug+123..");
-            Console.WriteLine("RSADebugEn---" + debugCode);
-            Console.WriteLine("RSADebugDe---" + SecurityRsa.Decrypt(debugCode));
-            Console.WriteLine("AESDebugEn---" + SecurityAes.Encrypt(debugCode));
-            Console.WriteLine("\n");
+            //rsa解密
             var code = SecurityRsa.Decrypt(request.Password);
-            Console.WriteLine("RSADecrypt---" + code);
-            Console.WriteLine("AESEncrypt---" + SecurityAes.Encrypt(code));
-            //用户已存在
-            if (_user.Select(request.UserName) != null)
-                return null;
-            //用户不存在
+            if (code is null) return null;
+            //查找用户
+            if (_user.Select(request.UserName) != null) return null;
             var newUser = new UserModel
             {
                 UserName = request.UserName,
                 Email = request.Email,
-                Password = SecurityAes.Encrypt(SecurityRsa.Decrypt(request.Password)),
+                Password = SecurityAes.Encrypt(code),
                 Role = request.Role.ToLower()
             };
             _user.Add(newUser);
@@ -121,14 +108,17 @@ namespace EnvironmentApi.Models
 
         public UserModel ModifyUserData(ModifyRequestDto requestDto)
         {
+            //rsa解密
+            var oldCode = SecurityRsa.Decrypt(requestDto.OldPassword);
+            var code = SecurityRsa.Decrypt(requestDto.Password);
+            if (oldCode is null || code is null) return null;
+            //查找用户
             var user = _user.Select(requestDto.UserName);
-            if (user is null)
-                return null;
-            if (user.Password != SecurityAes.Encrypt(SecurityRsa.Decrypt(requestDto.OldPassword)) &&
-                !user.Role.Contains("admin"))
+            if (user is null ||
+                (user.Password != SecurityAes.Encrypt(oldCode) && !user.Role.Contains("admin")))
                 return null;
             user.Email = requestDto.Email;
-            user.Password = SecurityAes.Encrypt(SecurityRsa.Decrypt(requestDto.Password));
+            user.Password = SecurityAes.Encrypt(code);
             user.Role = requestDto.Role.ToLower();
             _user.Update(user);
             return user;
@@ -145,9 +135,12 @@ namespace EnvironmentApi.Models
 
         public string Authenticated(LoginRequestDto request)
         {
+            //rsa解密
+            var code = SecurityRsa.Decrypt(request.Password);
+            if (code is null) return null;
             //获取用户
             var user = _user.Select(request.Username);
-            if (user is null || user.Password != SecurityAes.Encrypt(SecurityRsa.Decrypt(request.Password)))
+            if (user is null || user.Password != SecurityAes.Encrypt(code))
                 return null;
             //获取用户角色
             var roles = user.Role.Split("::", StringSplitOptions.RemoveEmptyEntries).ToList();

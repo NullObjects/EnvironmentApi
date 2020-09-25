@@ -7,7 +7,7 @@ namespace EnvironmentApi.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "User",
                 columns: table => new
                 {
                     UserName = table.Column<string>(nullable: false),
@@ -15,18 +15,18 @@ namespace EnvironmentApi.Migrations
                     Password = table.Column<string>(nullable: true),
                     Role = table.Column<string>(nullable: true)
                 },
-                constraints: table => { table.PrimaryKey("PK_Users", x => x.UserName); });
+                constraints: table => { table.PrimaryKey("PK_User", x => x.UserName); });
 
             migrationBuilder.InsertData(
-                table: "Users",
+                table: "User",
                 columns: new[] {"UserName", "Email", "Password", "Role"},
-                values: new object[] {"admin", "admin@admin.com", "admin@admin", "public::admin"});
+                values: new object[] {"admin", "admin@admin.com", "PBK+UIN0ifA9lVueYaEM8g==", "public::admin"});
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "User");
         }
     }
 }

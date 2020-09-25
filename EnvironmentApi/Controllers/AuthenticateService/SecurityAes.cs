@@ -2,7 +2,7 @@
 using System.IO;
 using System.Security.Cryptography;
 
-namespace EnvironmentApi.Models
+namespace EnvironmentApi.Controllers
 {
     public static class SecurityAes
     {

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EnvironmentApi.Migrations
 {
     [DbContext(typeof(EnvironmentContext))]
-    [Migration("20200922014032_addUser")]
+    [Migration("20200925080251_addUser")]
     partial class addUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,14 +84,14 @@ namespace EnvironmentApi.Migrations
 
                     b.HasKey("UserName");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
 
                     b.HasData(
                         new
                         {
                             UserName = "admin",
                             Email = "admin@admin.com",
-                            Password = "admin@admin",
+                            Password = "PBK+UIN0ifA9lVueYaEM8g==",
                             Role = "public::admin"
                         });
                 });
