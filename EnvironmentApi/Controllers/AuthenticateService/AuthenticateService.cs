@@ -38,8 +38,9 @@ namespace EnvironmentApi.Controllers
         /// 修改用户信息
         /// </summary>
         /// <param name="requestDto"></param>
+        /// <param name="isAdmin"></param>
         /// <returns></returns>
-        UserModel ModifyUserData(ModifyRequestDto requestDto);
+        UserModel ModifyUserData(ModifyRequestDto requestDto, bool isAdmin);
 
         /// <summary>
         /// 删除用户信息
@@ -106,7 +107,7 @@ namespace EnvironmentApi.Controllers
             return _user.Select();
         }
 
-        public UserModel ModifyUserData(ModifyRequestDto requestDto)
+        public UserModel ModifyUserData(ModifyRequestDto requestDto, bool isAdmin)
         {
             //rsa解密
             var oldCode = SecurityRsa.Decrypt(requestDto.OldPassword);
@@ -114,7 +115,7 @@ namespace EnvironmentApi.Controllers
             if (oldCode is null || code is null) return null;
             //查找用户
             var user = _user.Select(requestDto.UserName);
-            if (user is null || (user.Password != SecurityAes.Encrypt(oldCode) && !requestDto.IsAdmin))
+            if (user is null || (user.Password != SecurityAes.Encrypt(oldCode) && !isAdmin))
                 return null;
             user.Email = requestDto.Email;
             user.Password = SecurityAes.Encrypt(code);

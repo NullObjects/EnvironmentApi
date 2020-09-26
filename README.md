@@ -87,11 +87,9 @@ body
 - URL : https://<ip地址>/Authentication/Modify
 - method : post
 - 需要role为public的jwt
-- isAdmin:是否为管理员操作，管理员修改不需要原密码正确
 ```
 body
 {
-    "isAdmin":"",
     "username":"",
     "email":"",
     "oldPassword":"",

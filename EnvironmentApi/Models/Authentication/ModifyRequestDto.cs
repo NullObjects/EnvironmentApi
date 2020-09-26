@@ -5,7 +5,6 @@ namespace EnvironmentApi.Models
 {
     public class ModifyRequestDto
     {
-        [Required] [JsonProperty("isAdmin")] public bool IsAdmin { get; set; }
         [Required] [JsonProperty("username")] public string UserName { get; set; }
         [Required] [JsonProperty("email")] public string Email { get; set; }
 

@@ -26,13 +26,14 @@ namespace EnvironmentApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest("Invalid Request");
 
+            //检查token权限
+            var isAdmin = false;
+            var user = _authService.ParsingClaims(HttpContext.User.Claims, out var roles);
+            if (roles.Contains("admin"))
+                isAdmin = true;
             //注册管理员
-            if (request.Role.ToLower().Contains("admin"))
-            {
-                _authService.ParsingClaims(HttpContext.User.Claims, out var roles);
-                if (!roles.Contains("admin"))
-                    return BadRequest("非授权用户，无法注册管理员");
-            }
+            if (request.Role.ToLower().Contains("admin") && !isAdmin)
+                return BadRequest("非授权用户，无法注册");
 
             //用户注册
             if (_authService.AddUserData(request) is null)
@@ -67,14 +68,15 @@ namespace EnvironmentApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest("Invalid Request");
 
+            //检查token权限
+            var isAdmin = false;
             var user = _authService.ParsingClaims(HttpContext.User.Claims, out var roles);
-            if (request.UserName != user)
-            {
-                if (!roles.Contains("admin"))
-                    return BadRequest("非授权用户，无法修改其他用户信息");
-            }
+            if (roles.Contains("admin"))
+                isAdmin = true;
+            if ((request.UserName != user || request.Role.ToLower().Contains("admin")) && !isAdmin)
+                return BadRequest("非授权用户，无法修改");
 
-            if (_authService.ModifyUserData(request) is null)
+            if (_authService.ModifyUserData(request, isAdmin) is null)
                 return BadRequest("修改失败");
             return Ok("修改成功");
         }
