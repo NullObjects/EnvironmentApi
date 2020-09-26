@@ -5,6 +5,14 @@
 - Microsoft.EntityFrameworkCore.Tools
 - MySql.Data.EntityFrameworkCore
 
+### 加密策略
+1. 由前台向Api发起请求获取RSA公钥
+2. 获取公钥后前台向Api发起登录请求，携带RSA公钥加密后的登录信息
+3. Api接收到请求后RSA私钥解密登录信息，然后AES加密登录信息
+4. 将AES加密后数据与数据库中用户信息对比，如果无误，返回前台携带用户身份及角色的jwt
+5. 前台获取用户信息，删除信息，修改信息等均需携带jwt
+6. 后台可根据需要控制特定用户身份或特定角色等执行权限
+
 ### 使用前添加配置
 - appsettings.json
 ```
@@ -19,6 +27,7 @@
     "refreshExpiration": 60
   },
 ```
+
 ###
 - 快捷启动
 ```
@@ -26,7 +35,7 @@
 alias env_asp="cd ~/source/ASP/EnvironmentApi && sudo dotnet EnvironmentApi.dll"
 ```
 
-### 接口
+### 数据接口
 - 已配置https，可直接访问https://<ip地址>/<数据>/Get/<参数>
 - method : get
 #### <数据>
