@@ -52,14 +52,11 @@ day : 一天内
 week : 一周内
 other : 最新一条数据
 ```
-![timespan](https://github.com/NullObjects/EnvironmentApi/blob/master/images/timespan.png)
-- 自定义时间
 ```
 yyyy-mm-ddThh:MM:ss&&yyyy-mm-ddThh:MM:ss : 开始时间&&结束时间
 具体时间可省略，即yyyy-mm-dd&&yyyy-mm-dd
 不得大于7天，否则数据量过大
 ```
-![time](https://github.com/NullObjects/EnvironmentApi/blob/master/images/time.png)
 
 ### 用户管理接口
 - 以下role中public为公共角色(必要)，admin为管理员角色
