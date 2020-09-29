@@ -37,7 +37,7 @@ namespace EnvironmentApi.Controllers
 
             //用户注册
             if (_authService.AddUserData(request) is null)
-                return BadRequest("用户已存在，请直接登录");
+                return BadRequest("注册失败，检查是否已注册或其他注册信息");
             return Ok("注册成功");
         }
 
@@ -77,7 +77,7 @@ namespace EnvironmentApi.Controllers
                 return BadRequest("非授权用户，无法修改");
 
             if (_authService.ModifyUserData(request, isAdmin) is null)
-                return BadRequest("修改失败");
+                return BadRequest("修改失败，检查修改信息");
             return Ok("修改成功");
         }
 
@@ -94,11 +94,11 @@ namespace EnvironmentApi.Controllers
             if (username != user)
             {
                 if (!roles.Contains("admin"))
-                    return BadRequest("非授权用户，无法删除其他用户信息");
+                    return BadRequest("非授权用户，无法删除");
             }
 
             if (_authService.DeleteUserData(username) is null)
-                return BadRequest("删除失败");
+                return BadRequest("删除失败，检查待删除用户名");
             return Ok("删除成功");
         }
 
