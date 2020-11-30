@@ -1,0 +1,7 @@
+# 数据Api测试
+GET {{host}}Environment/Get/{{latest}}
+
+###
+GET {{host}}DeviceStatus/Get/{{hour}}
+
+###

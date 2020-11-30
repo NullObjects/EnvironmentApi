@@ -1,0 +1,43 @@
+# 认证Api测试
+GET {{host}}GetKey
+
+###
+POST {{host}}Register
+Content-Type: application/json
+
+{
+    "username":"aaa",
+    "email":"aaa",
+    "password":"{{pwd_rsa}}",
+    "role":"public::test"
+}
+
+###
+POST {{host}}Login
+Content-Type: application/json
+
+{
+    "username":"admin",
+    "password":"{{pwd_rsa}}"
+}
+
+###
+GET {{host}}Information
+Authorization: Bearer {{jwt}}
+
+###
+POST {{host}}Modify
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+    "username":"test",
+    "email":"test@test",
+    "oldPassword":"{{pwd_rsa}}",
+    "password":"{{pwd_rsa}}",
+    "role":"public::test"
+}
+
+###
+GET {{host}}Delete/aad
+Authorization: Bearer {{jwt}}
