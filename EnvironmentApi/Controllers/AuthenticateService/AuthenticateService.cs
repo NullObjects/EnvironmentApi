@@ -139,7 +139,7 @@ namespace EnvironmentApi.Controllers
             var code = SecurityRsa.Decrypt(request.Password);
             if (code is null) return null;
             //获取用户
-            var user = _user.Select(request.Username);
+            var user = _user.Select(request.UserName);
             if (user is null || user.Password != SecurityAes.Encrypt(code))
                 return null;
             //获取用户角色

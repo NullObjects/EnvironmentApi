@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using EnvironmentApi.Controllers;
 using EnvironmentApi.Models;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace EnvironmentApi
 {
@@ -50,8 +52,12 @@ namespace EnvironmentApi
             });
             services.AddScoped<IAuthenticateService, TokenAuthenticationService>();
             //数据库配置
-            services.AddDbContext<EnvironmentContext>(
-                options => options.UseMySQL(Configuration.GetConnectionString("EnvironmentConnection")));
+            services.AddDbContextPool<EnvironmentContext>(
+                options => options.UseMySql(
+                    Configuration.GetConnectionString("EnvironmentConnection"),
+                    new MySqlServerVersion(new Version(8, 0, 21)),
+                    mySqlOptions => mySqlOptions
+                        .CharSetBehavior(CharSetBehavior.NeverAppend)));
             services.AddScoped<IUser, UserRepository>();
             services.AddScoped<IDeviceStatus, DeviceStatusRepository>();
             services.AddScoped<IEnvironment, EnvironmentRepository>();

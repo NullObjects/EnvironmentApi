@@ -14,8 +14,8 @@ namespace EnvironmentApi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.8")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64)
+                .HasAnnotation("ProductVersion", "5.0.1");
 
             modelBuilder.Entity("EnvironmentApi.Models.DeviceStatusModel", b =>
             {
@@ -36,7 +36,7 @@ namespace EnvironmentApi.Migrations
                     .HasColumnType("float");
 
                 b.Property<DateTime>("RecordTime")
-                    .HasColumnType("datetime");
+                    .HasColumnType("datetime(6)");
 
                 b.Property<float>("SDCardOccupancyRate")
                     .HasColumnType("float");
@@ -56,7 +56,7 @@ namespace EnvironmentApi.Migrations
                     .HasColumnType("float");
 
                 b.Property<DateTime>("RecordTime")
-                    .HasColumnType("datetime");
+                    .HasColumnType("datetime(6)");
 
                 b.Property<float>("Temperature")
                     .HasColumnType("float");
@@ -69,16 +69,16 @@ namespace EnvironmentApi.Migrations
             modelBuilder.Entity("EnvironmentApi.Models.UserModel", b =>
             {
                 b.Property<string>("UserName")
-                    .HasColumnType("varchar(767)");
+                    .HasColumnType("varchar(255)");
 
                 b.Property<string>("Email")
-                    .HasColumnType("text");
+                    .HasColumnType("longtext");
 
                 b.Property<string>("Password")
-                    .HasColumnType("text");
+                    .HasColumnType("longtext");
 
                 b.Property<string>("Role")
-                    .HasColumnType("text");
+                    .HasColumnType("longtext");
 
                 b.HasKey("UserName");
 
