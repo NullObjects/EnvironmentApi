@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "DeviceStatus",
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,8 +20,8 @@
     "EnvironmentApi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "DeviceStatus/Get/latest",
-      "applicationUrl": "https://127.0.0.1:5001;http://127.0.0.1:5000",
+      "launchUrl": "swagger",
+      "applicationUrl": "https://127.0.0.1",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
