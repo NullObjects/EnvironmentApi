@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using XC.RSAUtil;
 
-namespace EnvironmentApi.Controllers
+namespace EnvironmentApi.Controllers.AuthenticateService
 {
     public class SecurityRsa
     {

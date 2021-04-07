@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using EnvironmentApi.Controllers;
+using EnvironmentApi.Controllers.AuthenticateService;
 using EnvironmentApi.Models;
+using EnvironmentApi.Models.Authentication;
 
 namespace HttpClient
 {

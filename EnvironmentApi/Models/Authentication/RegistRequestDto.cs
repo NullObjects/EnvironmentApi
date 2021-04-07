@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace EnvironmentApi.Models
+namespace EnvironmentApi.Models.Authentication
 {
     /// <summary>
     /// 用户注册模型

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace EnvironmentApi.Controllers
+namespace EnvironmentApi.Controllers.AuthenticateService
 {
     public class TokenManagement
     {

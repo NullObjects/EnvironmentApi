@@ -1,4 +1,4 @@
-﻿using EnvironmentApi.Controllers;
+﻿using EnvironmentApi.Controllers.AuthenticateService;
 using Microsoft.EntityFrameworkCore;
 
 namespace EnvironmentApi.Models

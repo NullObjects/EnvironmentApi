@@ -1,6 +1,6 @@
 using System;
 using System.Text;
-using EnvironmentApi.Controllers;
+using EnvironmentApi.Controllers.AuthenticateService;
 using EnvironmentApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -63,9 +63,6 @@ namespace EnvironmentApi
                     new MySqlServerVersion(new Version(8, 0, 21)),
                     mySqlOptions => mySqlOptions
                         .CharSetBehavior(CharSetBehavior.NeverAppend)));
-            services.AddScoped<IUser, UserRepository>();
-            services.AddScoped<IDeviceStatus, DeviceStatusRepository>();
-            services.AddScoped<IEnvironment, EnvironmentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

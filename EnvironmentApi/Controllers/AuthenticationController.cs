@@ -1,4 +1,6 @@
-﻿using EnvironmentApi.Models;
+﻿using EnvironmentApi.Controllers.AuthenticateService;
+using EnvironmentApi.Models;
+using EnvironmentApi.Models.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +14,7 @@ namespace EnvironmentApi.Controllers
 
         public AuthenticationController(IAuthenticateService authService)
         {
-            this._authService = authService;
+            _authService = authService;
         }
 
         /// <summary>

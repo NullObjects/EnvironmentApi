@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace EnvironmentApi.Models
+namespace EnvironmentApi.Models.Authentication
 {
     public class ModifyRequestDto
     {

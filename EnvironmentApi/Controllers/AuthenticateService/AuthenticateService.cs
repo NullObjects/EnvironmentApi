@@ -5,10 +5,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using EnvironmentApi.Models;
+using EnvironmentApi.Models.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace EnvironmentApi.Controllers
+namespace EnvironmentApi.Controllers.AuthenticateService
 {
     /// <summary>
     /// 认证接口
@@ -70,12 +71,12 @@ namespace EnvironmentApi.Controllers
     /// </summary>
     public class TokenAuthenticationService : IAuthenticateService
     {
-        private readonly IUser _user;
+        private readonly EnvironmentContext _context;
         private readonly TokenManagement _tokenManagement;
 
-        public TokenAuthenticationService(IUser user, IOptions<TokenManagement> tokenManagement)
+        public TokenAuthenticationService(EnvironmentContext context, IOptions<TokenManagement> tokenManagement)
         {
-            _user = user;
+            _context = context;
             _tokenManagement = tokenManagement.Value;
         }
 
@@ -85,7 +86,7 @@ namespace EnvironmentApi.Controllers
             var code = SecurityRsa.Decrypt(request.Password);
             if (code is null) return null;
             //查找用户
-            if (_user.Select(request.UserName) != null) return null;
+            if (_context.User.Find(request.UserName) != null) return null;
             var newUser = new UserModel
             {
                 UserName = request.UserName,
@@ -93,18 +94,19 @@ namespace EnvironmentApi.Controllers
                 Password = SecurityAes.Encrypt(code),
                 Role = request.Role.ToLower()
             };
-            _user.Add(newUser);
+            _context.User.Add(newUser);
+            _context.SaveChanges();
             return newUser;
         }
 
         public UserModel GetUserData(string username)
         {
-            return _user.Select(username);
+            return _context.User.Find(username);
         }
 
         public IEnumerable<UserModel> GetUserData()
         {
-            return _user.Select();
+            return _context.User;
         }
 
         public UserModel ModifyUserData(ModifyRequestDto requestDto, bool isAdmin)
@@ -114,22 +116,24 @@ namespace EnvironmentApi.Controllers
             var code = SecurityRsa.Decrypt(requestDto.Password);
             if (oldCode is null || code is null) return null;
             //查找用户
-            var user = _user.Select(requestDto.UserName);
+            var user = _context.User.Find(requestDto.UserName);
             if (user is null || (user.Password != SecurityAes.Encrypt(oldCode) && !isAdmin))
                 return null;
             user.Email = requestDto.Email;
             user.Password = SecurityAes.Encrypt(code);
             user.Role = requestDto.Role.ToLower();
-            _user.Update(user);
+            _context.User.Update(user);
+            _context.SaveChanges();
             return user;
         }
 
         public UserModel DeleteUserData(string username)
         {
-            var user = _user.Select(username);
+            var user = _context.User.Find(username);
             if (user is null)
                 return null;
-            _user.Delete(username);
+            _context.User.Remove(user);
+            _context.SaveChanges();
             return user;
         }
 
@@ -139,7 +143,7 @@ namespace EnvironmentApi.Controllers
             var code = SecurityRsa.Decrypt(request.Password);
             if (code is null) return null;
             //获取用户
-            var user = _user.Select(request.UserName);
+            var user = _context.User.Find(request.UserName);
             if (user is null || user.Password != SecurityAes.Encrypt(code))
                 return null;
             //获取用户角色

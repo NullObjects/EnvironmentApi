@@ -9,11 +9,11 @@ namespace EnvironmentApi.Controllers
     [Route("[controller]/[action]")]
     public class DeviceStatusController : ControllerBase
     {
-        private readonly IDeviceStatus _deviceStatus;
+        private readonly EnvironmentContext _context;
 
-        public DeviceStatusController(IDeviceStatus deviceStatus)
+        public DeviceStatusController(EnvironmentContext context)
         {
-            this._deviceStatus = deviceStatus;
+            _context = context;
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace EnvironmentApi.Controllers
         {
             var start = DateTime.Now;
             var end = DateTime.Now;
-            switch (span)
+            switch (span.ToLower())
             {
                 case "hour":
                     start = start.AddHours(-1);
@@ -38,10 +38,10 @@ namespace EnvironmentApi.Controllers
                     start = start.AddDays(-7);
                     break;
                 default:
-                    return new ObjectResult(_deviceStatus.Select().OrderByDescending(x => x.RecordTime).First());
+                    return new ObjectResult(_context.DeviceStatus.OrderByDescending(x => x.RecordTime).First());
             }
 
-            return new ObjectResult(_deviceStatus.Select()
+            return new ObjectResult(_context.DeviceStatus
                 .Where(x => x.RecordTime >= start && x.RecordTime <= end));
         }
 
@@ -59,14 +59,13 @@ namespace EnvironmentApi.Controllers
                 var startTime = Convert.ToDateTime(start);
                 var endTime = Convert.ToDateTime(end);
                 if ((endTime - startTime).Days <= 7)
-                    return new ObjectResult(_deviceStatus.Select()
+                    return new ObjectResult(_context.DeviceStatus
                         .Where(x => x.RecordTime >= startTime && x.RecordTime <= endTime));
-                else
-                    return new ObjectResult(_deviceStatus.Select().OrderByDescending(x => x.RecordTime).First());
+                throw new Exception("时间超出最大限度,返回最新记录");
             }
             catch
             {
-                return new ObjectResult(_deviceStatus.Select().OrderByDescending(x => x.RecordTime).First());
+                return new ObjectResult(_context.DeviceStatus.OrderByDescending(x => x.RecordTime).First());
             }
         }
     }
